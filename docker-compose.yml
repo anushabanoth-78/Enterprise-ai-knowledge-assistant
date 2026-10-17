@@ -20,6 +20,7 @@ services:
 
   api:
     build: .
+    image: rag-backend
     env_file: .env
     depends_on:
       db: {condition: service_healthy}
@@ -28,7 +29,7 @@ services:
     volumes: [uploads:/data/uploads, hfcache:/hf-cache, ./experiments:/srv/experiments]
 
   worker:
-    build: .
+    image: rag-backend
     command: celery -A app.worker.celery_app worker --loglevel=INFO --concurrency=2
     env_file: .env
     depends_on:
